@@ -49,6 +49,9 @@
   .toolbar #twitter-logo:hover {
     opacity: 0.8;
   }
+  .toolbar .title {
+    margin-right: 20px;
+  }
 
   .content {
     display: flex;
