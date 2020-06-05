@@ -1,13 +1,4 @@
 {
-  "classes": [
-    {
-      "id": 1,
-      "name": "students",
-      "name": "teachers",
-      "name": "subjects",
-      "name": "groups"
-    }
-  ],
   "students": [
     {
       "id": 1,
