@@ -1,0 +1,10 @@
+<div>
+    <h1>Створити викладача</h1>
+    <form [formGroup]="itemForm" (ngSubmit)="submitForm()" novalidate>
+        <div class="form-group">
+            <label>Ім'я</label>
+            <input type="text" formControlName="name" class="form-control" maxlength="20">
+        </div>
+        <button type="submit">Зберегти</button>
+    </form>
+</div>
