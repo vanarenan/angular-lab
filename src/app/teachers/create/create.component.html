@@ -3,8 +3,8 @@
     <form [formGroup]="itemForm" (ngSubmit)="submitForm()" novalidate>
         <div class="form-group">
             <label>Ім'я</label>
-            <input type="text" formControlName="name" class="form-control" maxlength="20">
+            <input type="text" formControlName="name" class="form-control">
         </div>
-        <button type="submit">Зберегти</button>
+        <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
 </div>

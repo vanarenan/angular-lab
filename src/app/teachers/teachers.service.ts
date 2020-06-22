@@ -23,7 +23,8 @@ export class TeachersService {
     .pipe(
       catchError(this.errorHandler)
     )
-  }  
+  }
+  
   getById(id): Observable<Teacher> {
     return this.httpClient.get<Teacher>(this.apiServer + '/teachers/' + id)
     .pipe(
@@ -51,6 +52,7 @@ export class TeachersService {
       catchError(this.errorHandler)
     )
   }
+  
   errorHandler(error) {
      let errorMessage = '';
      if(error.error instanceof ErrorEvent) {
