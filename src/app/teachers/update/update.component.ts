@@ -22,15 +22,16 @@ export class UpdateComponent implements OnInit {
   ) { }
   
   submitForm() {
-    this.service.create(this.itemForm.value).subscribe(res => {
-      console.log('Item created!');
+    this.service.update(this.itemForm.value.id, this.itemForm.value).subscribe(res => {
       this.router.navigateByUrl('/teachers/home');
     });
   }
 
   ngOnInit(): void {
+    this.itemForm = this.fb.group({id: null, name: null});
     let id = this.route.snapshot.params.itemId;
     this.service.getById(id).subscribe((data: Teacher)=> {
+      console.log(data);
       this.itemForm = this.fb.group(data);
     });
   }

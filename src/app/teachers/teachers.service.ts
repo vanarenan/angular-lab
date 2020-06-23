@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { throwError, Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Teacher } from "src/app/teachers/teacher";
+
+import { Teacher } from './teacher';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TeachersService {
 
-  private apiServer = "http://localhost:3000";
+  private apiServer = 'http://localhost:3000/teachers/';
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
@@ -18,36 +19,36 @@ export class TeachersService {
 
   constructor(private httpClient: HttpClient) { }
   
-  create(item): Observable<Teacher> {
-    return this.httpClient.post<Teacher>(this.apiServer + '/teachers/', JSON.stringify(item), this.httpOptions)
+  create(item): Observable<Teacher[]> {
+    return this.httpClient.post<Teacher>(this.apiServer, JSON.stringify(item), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
   
-  getById(id): Observable<Teacher> {
-    return this.httpClient.get<Teacher>(this.apiServer + '/teachers/' + id)
+  getById(id): Observable<Teacher[]> {
+    return this.httpClient.get<Teacher>(this.apiServer + id)
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
   getAll(): Observable<Teacher[]> {
-    return this.httpClient.get<Teacher[]>(this.apiServer + '/teachers/')
+    return this.httpClient.get<Teacher[]>(this.apiServer)
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
-  update(id, item): Observable<Teacher> {
-    return this.httpClient.put<Teacher>(this.apiServer + '/teachers/' + id, JSON.stringify(item), this.httpOptions)
+  update(id, item): Observable<Teacher[]> {
+    return this.httpClient.put<Teacher>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )
   }
 
-  delete(id){
-    return this.httpClient.delete<Teacher>(this.apiServer + '/teachers/' + id, this.httpOptions)
+  delete(id) {
+    return this.httpClient.delete<Teacher>(this.apiServer + id, this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     )

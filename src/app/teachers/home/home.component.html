@@ -17,7 +17,7 @@
                 <td></td>
                 <td>
                     <button type="button" class="btn btn-success" [routerLink]="['/teachers/update/', item.id]">Редагувати</button>
-                    <button type="button" class="btn btn-danger" (click)="service.delete(item.id)">Видалити</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteItem(item.id)">Видалити</button>
                 </td>
             </tr>
         </tbody>

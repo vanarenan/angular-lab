@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { TeachersService } from '../teachers.service';
 import { Teacher } from '../teacher';
@@ -12,13 +13,24 @@ export class HomeComponent implements OnInit {
 
   items: Teacher[] = [];
     
-  constructor(public service: TeachersService) { }
+  constructor(public service: TeachersService, private router: Router) { }
 
   ngOnInit(): void {
-    this.service.getAll().subscribe((data: Teacher[])=>{
-      console.log(data);
+    this.loadList();
+  }
+  
+  loadList(): void {
+    this.service.getAll().subscribe((data: Teacher[]) => {
       this.items = data;
     });
+  }
+  
+  deleteItem(id): void {
+    if (confirm('Ви впевнені?')) {
+      this.service.delete(id).subscribe(res => {
+          this.loadList();
+      });
+    }
   }
 
 }
