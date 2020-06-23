@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TeachersModule } from './teachers/teachers.module';
 import { SubjectsModule } from './subjects/subjects.module';
+import { StudentsModule } from './students/students.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SubjectsModule } from './subjects/subjects.module';
     NgbModule,
     AppRoutingModule,
     TeachersModule,
-    SubjectsModule
+    SubjectsModule,
+    StudentsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

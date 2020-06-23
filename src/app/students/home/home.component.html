@@ -1,0 +1,25 @@
+<div class="content">
+    <h1>Студенти</h1>
+    <button type="button" class="btn btn-primary" [routerLink]="['/students/create/']">Створити</button>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Ім'я</th>
+                <th>Група</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of items">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.group}}</td>
+                <td>
+                    <button type="button" class="btn btn-success" [routerLink]="['/students/update/', item.id]">Редагувати</button>
+                    <button type="button" class="btn btn-danger" (click)="deleteItem(item.id)">Видалити</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

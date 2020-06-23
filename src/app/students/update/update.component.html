@@ -1,0 +1,13 @@
+<div>
+    <h1>Редагувати студента</h1>
+    <form [formGroup]="itemForm" (ngSubmit)="submitForm()" novalidate>
+        <div class="form-group">
+            <input type="hidden" formControlName="id" class="form-control">
+            <label>Ім'я</label>
+            <input type="text" formControlName="name" class="form-control">
+            <label>Група</label>
+            <input type="text" formControlName="group" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Зберегти</button>
+    </form>
+</div>
