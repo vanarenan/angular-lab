@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TeachersService } from '../teachers.service';
+import { SubjectsService } from '../../subjects/subjects.service';
 import { Teacher } from '../teacher';
+import { Subject } from '../../subjects/subject';
 
 @Component({
   selector: 'app-home',
@@ -12,17 +14,30 @@ import { Teacher } from '../teacher';
 export class HomeComponent implements OnInit {
 
   items: Teacher[] = [];
+  subjectsData: Subject[] = [];
     
-  constructor(public service: TeachersService, private router: Router) { }
+  constructor(
+    private router: Router,
+    public service: TeachersService, 
+    public subjectsService: SubjectsService
+  ) { }
 
   ngOnInit(): void {
     this.loadList();
   }
   
   loadList(): void {
-    this.service.getAll().subscribe((data: Teacher[]) => {
-      this.items = data;
+    this.subjectsService.getAll().subscribe((data: Subject[]) => {
+      this.subjectsData = data;
+      this.service.getAll().subscribe((data: Teacher[]) => {
+        this.items = data;
+      });
     });
+  }
+  
+  getSubject(id: number): string {
+    let subject = this.subjectsData.find((o) => o.id == id)
+    return ( subject != undefined) ? subject.name : '';
   }
   
   deleteItem(id): void {

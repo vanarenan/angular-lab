@@ -19,15 +19,15 @@ export class TeachersService {
 
   constructor(private httpClient: HttpClient) { }
   
-  create(item): Observable<Teacher[]> {
-    return this.httpClient.post<Teacher[]>(this.apiServer, JSON.stringify(item), this.httpOptions)
+  create(item): Observable<Teacher> {
+    return this.httpClient.post<Teacher>(this.apiServer, JSON.stringify(item), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     );
   }
   
-  getById(id): Observable<Teacher[]> {
-    return this.httpClient.get<Teacher[]>(this.apiServer + id)
+  getById(id): Observable<Teacher> {
+    return this.httpClient.get<Teacher>(this.apiServer + id)
     .pipe(
       catchError(this.errorHandler)
     );
@@ -40,8 +40,8 @@ export class TeachersService {
     );
   }
 
-  update(id, item): Observable<Teacher[]> {
-    return this.httpClient.put<Teacher[]>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
+  update(id, item): Observable<Teacher> {
+    return this.httpClient.put<Teacher>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
     .pipe(
       catchError(this.errorHandler)
     );

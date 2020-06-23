@@ -5,6 +5,13 @@
             <label>Ім'я</label>
             <input type="text" formControlName="name" class="form-control">
         </div>
+        <h4>Предмети:</h4><br/>
+        <div class="form-group" *ngFor="let subject of itemForm.get('subjects')['controls']; let i = index">
+            <label formArrayName="subjects">
+              <input type="checkbox" [formControlName]="i" />
+              {{subjectsData[i].name}}
+            </label>
+        </div>
         <button type="submit" class="btn btn-primary">Зберегти</button>
     </form>
 </div>

@@ -14,7 +14,9 @@
             <tr *ngFor="let item of items">
                 <td>{{item.id}}</td>
                 <td>{{item.name}}</td>
-                <td></td>
+                <td>
+                  <li *ngFor="let subject of item.subjects">{{getSubject(subject)}}</li>
+                </td>
                 <td>
                     <button type="button" class="btn btn-success" [routerLink]="['/teachers/update/', item.id]">Редагувати</button>
                     <button type="button" class="btn btn-danger" (click)="deleteItem(item.id)">Видалити</button>
