@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { TeachersService } from '../teachers.service';
-import { Teacher } from '../teacher';
+import { SubjectsService } from '../subjects.service';
+import { Subject } from '../subject';
 
 @Component({
   selector: 'app-update',
@@ -18,19 +18,19 @@ export class UpdateComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    public service: TeachersService
+    public service: SubjectsService
   ) { }
   
   submitForm() {
     this.service.update(this.itemForm.value.id, this.itemForm.value).subscribe(res => {
-      this.router.navigateByUrl('/teachers/home');
+      this.router.navigateByUrl('/subjects/home');
     });
   }
 
   ngOnInit(): void {
     this.itemForm = this.fb.group({id: null, name: null});
     let id = this.route.snapshot.params.itemId;
-    this.service.getById(id).subscribe((data: Teacher[]) => {
+    this.service.getById(id).subscribe((data: Subject[]) => {
       this.itemForm = this.fb.group(data);
     });
   }

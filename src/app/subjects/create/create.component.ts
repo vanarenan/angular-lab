@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { TeachersService } from '../teachers.service';
-import { Teacher } from '../teacher';
+import { SubjectsService } from '../subjects.service';
+import { Subject } from '../subject';
 
 @Component({
   selector: 'app-create',
@@ -17,12 +17,12 @@ export class CreateComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private router: Router,
-    public service: TeachersService
+    public service: SubjectsService
   ) { }
   
   submitForm() {
     this.service.create(this.itemForm.value).subscribe(res => {
-      this.router.navigateByUrl('/teachers/home');
+      this.router.navigateByUrl('/subjects/home');
     });
   }
 
