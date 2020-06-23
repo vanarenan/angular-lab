@@ -1,3 +1,22 @@
 <div>
     <h1>Бали студента <b>{{student['name']}}</b>:</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Предмет</th>
+                <th>Бали</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let subject of subjectsData">
+                <td>{{subject.name}}</td>
+                <td>{{getPoints(subject.id)}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" 
+                      (click)="addPoint(subject.id)">Додати бал</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

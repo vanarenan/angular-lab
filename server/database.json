@@ -10,8 +10,20 @@
           "point": 10
         },
         {
+          "subjectId": 1,
+          "point": 12
+        },
+        {
+          "subjectId": 1,
+          "point": 15
+        },
+        {
           "subjectId": 2,
           "point": 11
+        },
+        {
+          "subjectId": 2,
+          "point": 1
         }
       ]
     },

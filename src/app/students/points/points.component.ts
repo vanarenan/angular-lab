@@ -39,6 +39,30 @@ export class PointsComponent implements OnInit {
 //    });
 //  }
 
+  getPoints(id: number): string {
+    return this.student['points'].filter((o) => o.subjectId == id).map((o) => o.point).join(', ');
+  }
+  
+  getSubjectName(id: number): string {
+    return this.subjectsData.filter((o) => o.id == id).map((o) => o.name).join('');
+  } 
+  
+  addPoint(id: number): void {
+    let point = prompt('Додати бал з предмету "' + this.getSubjectName(id) + '"');
+    if (parseInt(point) >= 0 && parseInt(point) <= 100) {
+      this.updatePoints(id, parseInt(point));
+    } else {
+      alert('Введіть число від 0 до 100!');
+    }
+  }
+  
+  updatePoints(id: number, point: number): void {
+    this.student['points'].push({subjectId: id, point: point});
+    this.studentsService.update(this.student['id'], this.student).subscribe(res => {
+      this.router.navigateByUrl('/students/points/' + this.student['id']);
+    });
+  }
+  
   ngOnInit(): void {
     this.subjectsService.getAll().subscribe((data: Subject[]) => {
       this.subjectsData = data;
