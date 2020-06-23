@@ -7,10 +7,11 @@ import { StudentsRoutingModule } from './students-routing.module';
 import { HomeComponent } from './home/home.component';
 import { CreateComponent } from './create/create.component';
 import { UpdateComponent } from './update/update.component';
+import { PointsComponent } from './points/points.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, CreateComponent, UpdateComponent],
+  declarations: [HomeComponent, CreateComponent, UpdateComponent, PointsComponent],
   imports: [
     CommonModule,
     StudentsRoutingModule,

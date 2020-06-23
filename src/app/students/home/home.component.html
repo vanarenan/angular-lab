@@ -16,6 +16,7 @@
                 <td>{{item.name}}</td>
                 <td>{{item.group}}</td>
                 <td>
+                    <button type="button" class="btn btn-primary" [routerLink]="['/students/points/', item.id]">Бали</button>
                     <button type="button" class="btn btn-success" [routerLink]="['/students/update/', item.id]">Редагувати</button>
                     <button type="button" class="btn btn-danger" (click)="deleteItem(item.id)">Видалити</button>
                 </td>
