@@ -13,7 +13,6 @@ script:
   - ng build --prod --base-href https://vanarenan.github.io/angular-lab/
 deploy:
   provider: pages
-  cleanup: true
   token: $GITHUB_TOKEN
   local_dir: dist/angular-lab
   on:
