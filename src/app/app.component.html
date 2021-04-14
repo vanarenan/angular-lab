@@ -11,18 +11,16 @@
     <a class="card" rel="noopener" title="Список предметів" [routerLink]="['/subjects/home/']">
       <span>Предмети</span>
     </a>
-     <a class="card" rel="noopener" title="Список студентів" [routerLink]="['/students/home/']">
+    <a class="card" rel="noopener" title="Список студентів" [routerLink]="['/students/home/']">
       <span>Студенти</span>
     </a>
   </div>
   <div class="spacer"></div>
   <div class="card-container">
-<!-- 
-    <a class="card" rel="noopener">
-      <span>Вихід</span>
+    <a class="card" rel="noopener" (click)="onRestore()">
+      <span>Відновлення бази</span>
     </a>
- -->
-  </div>
+   </div>
 </div>
 
 <div class="content" role="main">

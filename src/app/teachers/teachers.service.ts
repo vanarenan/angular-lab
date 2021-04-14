@@ -10,60 +10,44 @@ import { Teacher } from './teacher';
 })
 export class TeachersService {
 
-  private apiServer = 'http://localhost:3000/teachers/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
+  storageAll = JSON.parse(localStorage.getItem('UMSDATA'));
+  storage = this.storageAll.teachers;
+  
   constructor(private httpClient: HttpClient) { }
   
-  create(item): Observable<Teacher> {
-    return this.httpClient.post<Teacher>(this.apiServer, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  create(item: Teacher): Observable<void> {
+    return new Observable(subscriber => {
+      item.id = this.storage.sort((a,b) => a.id - b.id)[this.storage.length-1].id + 1;
+      this.storage.push(item);
+      localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+      subscriber.next();
+    });
   }
   
-  getById(id): Observable<Teacher> {
-    return this.httpClient.get<Teacher>(this.apiServer + id)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  getById(id: number): Observable<Teacher> {
+    return new Observable(subscriber => { subscriber.next(this.storage.find(x => x.id == id)); });
   }
 
   getAll(): Observable<Teacher[]> {
-    return this.httpClient.get<Teacher[]>(this.apiServer)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+    return new Observable(subscriber => { subscriber.next(this.storage); });
   }
 
-  update(id, item): Observable<Teacher> {
-    return this.httpClient.put<Teacher>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  update(id: number, item: Teacher): Observable<void> {
+    return new Observable(subscriber => {
+        var teacher = this.storage.find(x => x.id == id);
+        teacher.name = item.name;
+        teacher.subjects = item.subjects;
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
 
-  delete(id) {
-    return this.httpClient.delete<Teacher>(this.apiServer + id, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  delete(id: number): Observable<void> {
+    return new Observable(subscriber => {
+        this.storage = this.storage.filter(x => x.id !== id);
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
   
-  errorHandler(error) {
-     let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
-       // Get client-side error
-       errorMessage = error.error.message;
-     } else {
-       // Get server-side error
-       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-     }
-     console.log(errorMessage);
-     return throwError(errorMessage);
-  }
 }

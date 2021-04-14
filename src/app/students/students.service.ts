@@ -10,60 +10,54 @@ import { Student } from './student';
 })
 export class StudentsService {
 
-  private apiServer = 'http://localhost:3000/students/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
+  storageAll = JSON.parse(localStorage.getItem('UMSDATA'));
+  storage = this.storageAll.students;
 
   constructor(private httpClient: HttpClient) { }
   
-  create(item): Observable<Student[]> {
-    return this.httpClient.post<Student[]>(this.apiServer, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  create(item: Student): Observable<void> {
+    return new Observable(subscriber => {
+      item.points = [];
+      item.id = this.storage.sort((a,b) => a.id - b.id)[this.storage.length-1].id + 1;
+      this.storage.push(item);
+      localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+      subscriber.next();
+    });
   }
   
-  getById(id): Observable<Student[]> {
-    return this.httpClient.get<Student[]>(this.apiServer + id)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  getById(id: number): Observable<Student> {
+    return new Observable(subscriber => { subscriber.next(this.storage.find(x => x.id == id)); });
   }
 
   getAll(): Observable<Student[]> {
-    return this.httpClient.get<Student[]>(this.apiServer)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+    return new Observable(subscriber => { subscriber.next(this.storage); });
   }
 
-  update(id, item): Observable<Student[]> {
-    return this.httpClient.put<Student[]>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
-  }
-
-  delete(id) {
-    return this.httpClient.delete<Student>(this.apiServer + id, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  update(id: number, item: Student): Observable<void> {
+    return new Observable(subscriber => {
+        var student = this.storage.find(x => x.id == id);
+        student.name = item.name;
+        student.group = item.group;
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
   
-  errorHandler(error) {
-     let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
-       // Get client-side error
-       errorMessage = error.error.message;
-     } else {
-       // Get server-side error
-       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-     }
-     console.log(errorMessage);
-     return throwError(errorMessage);
+  updatePoints(id: number, item: any): Observable<void> {
+    return new Observable(subscriber => {
+        var student = this.storage.find(x => x.id == id);
+        student.points.push(item);
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
+
+  delete(id: number): Observable<void> {
+    return new Observable(subscriber => {
+        this.storage = this.storage.filter(x => x.id !== id);
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
+  }
+
 }

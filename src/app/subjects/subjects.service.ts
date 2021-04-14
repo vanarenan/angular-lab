@@ -10,60 +10,43 @@ import { Subject } from './subject';
 })
 export class SubjectsService {
 
-  private apiServer = 'http://localhost:3000/subjects/';
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json'
-    })
-  };
-
+  storageAll = JSON.parse(localStorage.getItem('UMSDATA'));
+  storage = this.storageAll.subjects;
+  
   constructor(private httpClient: HttpClient) { }
   
-  create(item): Observable<Subject[]> {
-    return this.httpClient.post<Subject[]>(this.apiServer, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  create(item: Subject): Observable<void> {
+    return new Observable(subscriber => {
+      item.id = this.storage.sort((a,b) => a.id - b.id)[this.storage.length-1].id + 1;
+      this.storage.push(item);
+      localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+      subscriber.next();
+    });
   }
   
-  getById(id): Observable<Subject[]> {
-    return this.httpClient.get<Subject[]>(this.apiServer + id)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  getById(id: number): Observable<Subject> {
+    return new Observable(subscriber => { subscriber.next(this.storage.find(x => x.id == id)); });
   }
 
   getAll(): Observable<Subject[]> {
-    return this.httpClient.get<Subject[]>(this.apiServer)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+    return new Observable(subscriber => { subscriber.next(this.storage); });
   }
 
-  update(id, item): Observable<Subject[]> {
-    return this.httpClient.put<Subject[]>(this.apiServer + id, JSON.stringify(item), this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  update(id: number, item: Subject): Observable<void> {
+    return new Observable(subscriber => {
+        var subject = this.storage.find(x => x.id == id);
+        subject.name = item.name;
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
 
-  delete(id) {
-    return this.httpClient.delete<Subject>(this.apiServer + id, this.httpOptions)
-    .pipe(
-      catchError(this.errorHandler)
-    );
+  delete(id: number): Observable<void> {
+    return new Observable(subscriber => {
+        this.storage = this.storage.filter(x => x.id !== id);
+        localStorage.setItem('UMSDATA', JSON.stringify(this.storageAll));
+        subscriber.next();
+    });
   }
-  
-  errorHandler(error) {
-     let errorMessage = '';
-     if(error.error instanceof ErrorEvent) {
-       // Get client-side error
-       errorMessage = error.error.message;
-     } else {
-       // Get server-side error
-       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-     }
-     console.log(errorMessage);
-     return throwError(errorMessage);
-  }
+ 
 }

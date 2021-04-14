@@ -57,8 +57,7 @@ export class PointsComponent implements OnInit {
   }
   
   updatePoints(id: number, point: number): void {
-    this.student['points'].push({subjectId: id, point: point});
-    this.studentsService.update(this.student['id'], this.student).subscribe(res => {
+    this.studentsService.updatePoints(this.student['id'], {subjectId: id, point: point}).subscribe(res => {
       this.router.navigateByUrl('/students/points/' + this.student['id']);
     });
   }
