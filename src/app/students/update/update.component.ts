@@ -30,7 +30,7 @@ export class UpdateComponent implements OnInit {
   ngOnInit(): void {
     this.itemForm = this.fb.group({id: null, name: null, group: null});
     let id = this.route.snapshot.params.itemId;
-    this.service.getById(id).subscribe((data: Student[]) => {
+    this.service.getById(id).subscribe((data: Student) => {
       this.itemForm = this.fb.group(data);
     });
   }
